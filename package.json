@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com/acidr31gn/Student_Appointment_Scheduler.git"
+    "url": "https://github.com/acidr31gn/Student_Appointment_Scheduler.git"
   },
   "author": "",
   "license": "ISC",
