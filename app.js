@@ -16,10 +16,15 @@ app.get('/', function(req, res) {
     res.render('index');
 });
 
-//GET Advisor Page
+// GET Advisor Page
 app.get('/advisor', function(req, res) {
     res.render('advisor.html');
 });
+
+// GET Student Page
+app.get('/student', function(req, res) {
+    res.render('student.html');
+})
 
 app.listen(port);
 
