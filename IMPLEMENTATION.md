@@ -53,7 +53,8 @@ For example, my test page is `localhost:3000/test/js`.
 
 * All the HTML pages are set up in the `views` folder.
 
-* Any JavaScript files needed for the HTML pages are set up in the `public/javascript` folder. You will notice that the script tag that links to these folders in the HTML pages actually says `/assets/javascript/...`. This is due to the line in `app.js` that says ```
+* Any JavaScript files needed for the HTML pages are set up in the `public/javascript` folder. You will notice that the script tag that links to these folders in the HTML pages actually says `/assets/javascript/...`. This is due to the line in `app.js` that says 
+```
 app.use('/assets', express.static(__dirname + '/public'));
 ```
 Anytime you need a JavaScript file in your HTML, use the `/assets/javascript/...` route for your script source.
