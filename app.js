@@ -3,6 +3,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var db = require('./database');
 var Advisor = require('./models/advisorModel');
 var Appointment = require('./models/appointmentModel');
 
