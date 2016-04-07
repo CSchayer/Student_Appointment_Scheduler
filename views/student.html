@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="student">
 <head>
     <meta charset='utf-8' />
     <title>Student</title>
+    <script src="/assets/javascript/angular.js"></script>
+    <script src="/assets/javascript/student.js"></script>
     <link href='/assets/stylesheets/fullcalendar.css' rel='stylesheet' />
     <link href="/assets/stylesheets/jquery-ui.css" rel="stylesheet" />
     <link href="/assets/stylesheets/index.css" rel="stylesheet" />
@@ -14,16 +16,18 @@
     <script src="/assets/javascript/jquery.lightbox_me.js"></script>
 </head>
 <body>
-<div>
-    <div>
-        <label for="counselor">Select a counselor</label>
-        <select name="counselor" id="counselor">
-            <option>Counselor1</option>
-            <option>Counselor2</option>
-            <option>Counselor3</option>
-            <option>Counselor4</option>
-            <option>Counselor5</option>
+<div ng-controller="selectOptions">
+
+    <form name="appointment">
+        <label for="advisor">Select an advisor</label>
+        <select name="advisor" id="advisor" ng-model="advisorList">
+            <option ng-repeat="advisor in advisorList" value="{{advisor.name}}">
+                {{advisor.name}}
+            </option>
         </select>
+    </form>
+
+    <div>
         <div id="datepicker" style="width:50%;"></div>
     </div>
     <div>
