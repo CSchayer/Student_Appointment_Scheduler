@@ -14,20 +14,36 @@
     <script src="/assets/javascript/jquery.lightbox_me.js"></script>
 </head>
 <body>
-<div>
-    <div>
-        <label for="counselor">Select a counselor</label>
-        <select name="counselor" id="counselor">
-            <option>Counselor1</option>
-            <option>Counselor2</option>
-            <option>Counselor3</option>
-            <option>Counselor4</option>
-            <option>Counselor5</option>
-        </select>
-        <div id="datepicker" style="width:50%;"></div>
+<header id="header"><p>Header...</p></header>
+<div id="window">
+    <div id="leftcolumn" style="float:left" >
+        <div>
+            <div>
+                <label for="counselor">Select a Counselor</label>
+                <select name="counselor" id="counselor">
+                    <option>Counselor1</option>
+                    <option>Counselor2</option>
+                    <option>Counselor3</option>
+                    <option>Counselor4</option>
+                    <option>Counselor5</option>
+                </select>
+            </div>
+            <div id="serviceSelector" style="display:none">
+                <label for="service">Select A Service</label>
+                <select name="service" id="service">
+                    <option>Reason1</option>
+                    <option>Reason2</option>
+                    <option>Reason3</option>
+                    <option>Reason4</option>
+                </select>
+            </div>
+            <div id="counselorSelector">
+                <div id="datepicker" style="width:50%;display:none"></div>
+            </div>
+        </div>
     </div>
     <div>
-        <div id='calendar' style="width: 50%;"></div>
+        <div id='calendar' style="width: 50%; float:right"></div>
     </div>
 </div>
 

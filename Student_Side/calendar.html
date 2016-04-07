@@ -4,7 +4,7 @@
     <meta charset='utf-8' />
     <link href='css/fullcalendar.css' rel='stylesheet' />
     <link href="css/jquery-ui.css" rel="stylesheet" />
-    <line href="css/index.css" rel="stylesheet" />
+    <link href="css/index.css" rel="stylesheet" />
     <script src='js/moment.js'></script>
     <script src="js/jquery.js"></script>
     <script src="js/jquery-ui.js"></script>
@@ -14,21 +14,23 @@
 </head>
 <body>
     <div>
+
         <div>
-                <label for="counselor">Select a counselor</label>
-                <select name="counselor" id="counselor">
-                    <option>Counselor1</option>
-                    <option>Counselor2</option>
-                    <option>Counselor3</option>
-                    <option>Counselor4</option>
-                    <option>Counselor5</option>
-                </select>
-            <div id="datepicker" style="width:50%;"></div>
-        </div>
+            <label for="counselor">Select a Counselor</label>
+            <select name="counselor" id="counselor">
+                <option>Counselor1</option>
+                    option>Counselor2</option>
+                <option>Counselor3</option>
+                <option>Counselor4</option>
+                <option>Counselor5</option>
+            </select>
+            <div id="counselorSelector">
+                <div id="datepicker" style="width:50%;display:none"></div>
+            </div>
         <div>
             <div id='calendar' style="width: 50%;"></div>
         </div>
-    </div>
-
+        </div>
+    <div>
 </body>
 </html>
