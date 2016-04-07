@@ -37,16 +37,6 @@ app.get('/student', function(req, res) {
     res.render('student.html');
 });
 
-// Show all the advisors in the database (test page)
-app.get('/advisorlist', function(req, res) {
-    var query = Advisor.find({});
-    query.exec(function(err, advisors) {
-        if (err)
-            res.send(err);
-        res.json(advisors);
-    })
-});
-
 
 
 //

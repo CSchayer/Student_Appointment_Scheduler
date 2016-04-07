@@ -21,18 +21,31 @@ module.exports = function(app) {
         });
     });
 
-    app.get('/api/task/:id', function(req, res) {
-        Tasks.findById({ _id: req.params.id }, function(err, task) {
-            if (err) throw err;
+    // Show all the advisors in the database
+    app.get('/api/advisorlist', function(req, res) {
+        var query = Advisor.find({});
+        query.exec(function(err, advisors) {
+            if (err)
+                res.send(err);
+            res.json(advisors);
+        })
+    });
 
-            res.send(task);
-        });
+
+    // Show all the appointments in the database
+    app.get('/api/appointmentlist', function(req, res) {
+        var query = Appointment.find({});
+        query.exec(function(err, appointment) {
+            if (err)
+                res.send(err);
+            res.json(appointment);
+        })
     });
 
 
     // POST Routes
 
-    // Add advisor to the database (test page)
+    // Add advisor to the database
     app.post('/api/advisor/add', function(req, res) {
         // Create a new advisor
         var newAdvisor = new Advisor(req.body);
@@ -48,8 +61,8 @@ module.exports = function(app) {
     });
 
 
-    // Add appointment
-    app.post('/student/add/appointment', function(req, res) {
+    // Add an appointment to the database
+    app.post('/api/appointment/add', function(req, res) {
         // Create a new appointment
         var newAppt = new Appointment(req.body);
 
@@ -61,40 +74,15 @@ module.exports = function(app) {
     });
 
 
+    // DELETE Routes
 
-
-
-
-
-
-
-    app.post('/api/tasks', function(req, res) {
-        if (req.body.id) {
-            Tasks.findByIdAndUpdate(req.body.id, { task: req.body.task, isDone: req.body.isDone,
-                hasAttachment: req.body.hasAttachment }, function(err, task) {
-                if (err) throw err;
-                res.send("Updated");
-            });
-        }
-        else {
-            var newTask = Task(
-                {
-                    uname: "test",
-                    task: req.body.task,
-                    isDone: req.body.isDone,
-                    hasAttachmet: req.body.hasAttachment
-                });
-            newTask.save(function(err) {
-                if (err) throw err;
-                res.send("Saved");
-            });
-        }
-    });
-
-    app.delete('/api/tasks', function(req, res) {
-        Tasks.findByIdAndRemove(req.body.id, function(err) {
+    // Delete an appointment fro the database
+    app.delete('/api/appointment/delete', function(req, res) {
+        Appointment.findByIdAndRemove(req.body.id, function(err) {
             if (err) throw err;
             res.send("Deleted");
         });
     });
-}
+
+
+};
