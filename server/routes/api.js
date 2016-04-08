@@ -42,6 +42,14 @@ module.exports = function(app) {
         })
     });
 
+    app.get('/api/appointmentbyadvisor/:name', function(req, res) {
+        Appointment.find({ advisor: req.params.name }, function(err, advisor) {
+            if (err) throw err;
+
+            res.send(advisor);
+        });
+    });
+
 
     // POST Routes
 
@@ -70,6 +78,7 @@ module.exports = function(app) {
         newAppt.save(function(err) {
             if (err)
                 res.send(err);
+            res.send("added " + newAppt);
         });
     });
 
@@ -78,11 +87,14 @@ module.exports = function(app) {
 
     // Delete an appointment fro the database
     app.delete('/api/appointment/delete', function(req, res) {
-        Appointment.findByIdAndRemove(req.body.id, function(err) {
+        Appointment.findByIdAndRemove(req.body._id, function(err, appointment) {
             if (err) throw err;
-            res.send("Deleted");
+            if (appointment === null) {
+                res.send("Error: Appointment ID not found")
+            }
+            else {
+                res.send("Deleted \n" + appointment);
+            }
         });
     });
-
-
 };

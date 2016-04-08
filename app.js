@@ -64,5 +64,7 @@ app.get('/test/js', function(req, res) {
 });
 
 // Starts the server on port 3000
-app.listen(port);
+app.listen(port, function() {
+    console.log("App listening on port " + port);
+});
 
