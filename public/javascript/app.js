@@ -3,7 +3,8 @@
 angular.module('mwl.calendar.docs', ['mwl.calendar', 'ngAnimate', 'ui.bootstrap']);
 angular
     .module('mwl.calendar.docs') //you will need to declare your module with the dependencies ['mwl.calendar', 'ui.bootstrap', 'ngAnimate']
-    .controller('KitchenSinkCtrl', function(moment, alert) {
+    .controller('KitchenSinkCtrl', function(moment, alert, $http) {
+
 
         var vm = this;
 

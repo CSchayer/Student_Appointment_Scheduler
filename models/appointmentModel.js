@@ -5,10 +5,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var appointmentSchema = new Schema({
-    day: Date,
+    day: String,
     time: String,
-    reason: String,
-    advisor: String
+    service: String,
+    advisor: String,
+    student: String,
+    studentEmail: String
 });
 
 var Appointment = mongoose.model('Appointment', appointmentSchema);
