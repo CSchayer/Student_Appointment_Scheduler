@@ -4,14 +4,48 @@ label {
     font-size: 12pt;
 }
 
+
+.fc-time-grid .fc-slats td {
+    height: 1.7em;
+}
+/*#calendar{
+    background:#461D7C;
+    color:#FDD023;}*/
+
+/*CSS for the selector (choose counselor choose reason) */
 select {
     width: 200px;
 }
 
-
+/*css for datepicker (mini calendar)*/
 .ui-datepicker{
     width: 15em;
 }
+
+/*----css for designing the modal and form-------*/
+form label {
+    display: inline-block;
+    margin: 0px 0 0 0;
+    font-size:1.4em;
+}
+
+.formText{font-size:1.4em;}
+
+#name{margin-left:34px;}
+
+fieldset{
+    margin-bottom:10px;
+}
+
+fieldset:last-child{
+
+}
+/*--------------------------------------------*/
+
+
+
+
+
 
 #header {
     font-size: large;

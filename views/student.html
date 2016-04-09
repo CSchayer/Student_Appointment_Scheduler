@@ -43,7 +43,28 @@
         </div>
     </div>
     <div>
-        <div id='calendar' style="width: 50%; float:right"></div>
+        <div id='calendar' style="width: 45%; float:right"></div>
+    </div>
+    <div id="dialog" title="Appointment Overview" style="display:none">
+        <form id="#form">
+
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all">
+                <br>
+                <label for="title">Student ID:</label>
+                <input type="text" name="title" id="title" class="text ui-widget-content ui-corner-all">
+                <br>
+
+                <div id="formDate" class="formText"></div>
+                <div id="formTime" class="formText"></div>
+                <div id="formCounselor" class="formText"></div>
+                <div id="formReason" class="formText"></div>
+                <div>
+                    <button type = 'button' id="#submit">Submit</button>
+                    <button>Cancel</button>
+                </div>
+
+        </form>
     </div>
 </div>
 
