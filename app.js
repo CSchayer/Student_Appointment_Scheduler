@@ -3,7 +3,8 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var db = require('./database');
+var db = require('./server/database');
+var api = require('./server/routes/api');
 var Advisor = require('./models/advisorModel');
 var Appointment = require('./models/appointmentModel');
 
@@ -15,9 +16,11 @@ app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
 
-//
+// GET API
+api(app);
+
+
 // GET Routes
-// ----------------------------------------
 
 // Home Page
 app.get('/', function(req, res) {
@@ -34,48 +37,6 @@ app.get('/student', function(req, res) {
     res.render('student.html');
 });
 
-// Show all the advisors in the database (test page)
-app.get('/advisorlist', function(req, res) {
-    var query = Advisor.find({});
-    query.exec(function(err, advisors) {
-        if (err)
-            res.send(err);
-        res.json(advisors);
-    })
-});
-
-
-//
-// POST Routes
-// ---------------------------------------------
-
-// Add advisor to the database (test page)
-app.post('/advisorlist', function(req, res) {
-    // Create a new advisor
-    var newAdvisor = new Advisor(req.body);
-
-    // Save the new advisor in the database
-    newAdvisor.save(function(err) {
-        if (err)
-            res.send(err);
-
-        // Display new user
-        res.json(req.body);
-    });
-});
-
-
-// Add appointment
-app.post('/student', function(req, res) {
-    // Create a new appointment
-    var newAppt = new Appointment(req.body);
-
-    // Save the new appointment in the database
-    newAppt.save(function(err) {
-        if (err)
-            res.send(err);
-    });
-});
 
 
 //
@@ -103,5 +64,7 @@ app.get('/test/js', function(req, res) {
 });
 
 // Starts the server on port 3000
-app.listen(port);
+app.listen(port, function() {
+    console.log("App listening on port " + port);
+});
 

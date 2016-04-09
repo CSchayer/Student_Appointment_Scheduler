@@ -2,7 +2,7 @@
 
 var app = angular.module('test', []);
 
-app.controller('MainCtrl', function($scope) {
+app.controller('MainCtrl', function($scope, $http) {
     $scope.posts = [
         {title: 'post1', upvotes: 5},
         {title: 'post2', upvotes: 1},
@@ -26,5 +26,42 @@ app.controller('MainCtrl', function($scope) {
         post.upvotes += 1;
     };
 
+
+
+    // AJAX requests
+
+    // GET all appointments
+    $http.get('/api/appointmentlist').then(function(response) {
+        console.log("All appointments:");
+        console.log(response.data);
     });
+
+    // GET all appointments for specific advisor
+    var name = "John Doe"
+
+    $http.get('/api/appointmentbyadvisor/' + name).then(function(response) {
+        console.log("Appointments for " + name);
+        console.log(response.data);
+    });
+
+
+    // POST a new appointment
+
+    var jsonData = {
+        "day": "4/8/16",
+        "time": "1:00 PM",
+        "service": "Other",
+        "advisor": "John Doe",
+        "student": "James Jones",
+        "studentEmail": "jj@gmail.com"
+    };
+
+    /* I'm commenting this out because it will add this appointment every time it is run
+       but this is a simple example of how it's done
+    $http.post('/api/appointment/add', jsonData).then(function(response) {
+        console.log(response.data);
+    });
+    */
+
+});
 

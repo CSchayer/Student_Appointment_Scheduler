@@ -7,7 +7,8 @@ var Schema = mongoose.Schema;
 var advisorSchema = new Schema({
     username: String,
     password: String,
-    name: String
+    name: String,
+    availableTimes: [String]
 });
 
 var Advisor = mongoose.model('Advisor', advisorSchema);
