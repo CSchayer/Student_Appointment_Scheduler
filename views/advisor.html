@@ -11,7 +11,29 @@
     <script src="/assets/javascript/app.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link href="//mattlewis92.github.io/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.min.css" rel="stylesheet">
+
+    <style>
+
+        #header {
+            padding: 0.3em;
+            background: #461D7C;
+            color: #FDD023;
+            font-size: 300%;
+            font-family: Garamond;
+            text-align: center;
+        }
+        .btn-primary {
+            background: #461D7C;
+        }
+        .cal-day-today span[data-cal-date] {
+            color:#461D7C;
+        }
+
+    </style>
+
 </head>
+<body>
+<header id="header"><p>LSU Advisor Appointments</p></header>
 <div class="container">
 
     <div ng-controller="KitchenSinkCtrl as vm">
