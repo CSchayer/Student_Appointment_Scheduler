@@ -27,10 +27,24 @@ module.exports = function(app) {
         query.exec(function(err, advisors) {
             if (err)
                 res.send(err);
-            res.json(advisors);
-        })
+            res.send(advisors);
+        });
     });
 
+    // Show only the names of the advisors in the database
+    app.get('/api/advisornames', function(req, res) {
+        var query = Advisor.find({});
+        query.exec(function(err, advisors) {
+            if (err)
+                res.send(err);
+
+            var names = [];
+            advisors.forEach(function(advisor) {
+                names.push(advisor.name);
+            });
+            res.send(names);
+        });
+    });
 
     // Show all the appointments in the database
     app.get('/api/appointmentlist', function(req, res) {
