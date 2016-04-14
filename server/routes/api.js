@@ -56,7 +56,7 @@ module.exports = function(app) {
 
 
             advisor.forEach(function(advisor) {
-               times.push(advisor.available);
+               times.push(advisor.week);
             });
             res.send(times);
         });
