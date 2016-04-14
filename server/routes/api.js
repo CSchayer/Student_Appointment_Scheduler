@@ -129,4 +129,19 @@ module.exports = function(app) {
             }
         });
     });
+
+
+    // PUT Routes
+    app.put('/api/advisor/availabletimes', function(req,res) {
+        console.log(req.body.name);
+        console.log(req.body.unavailable);
+
+        Advisor.find({ name: req.body.name }, function(err, advisor) {
+            if (err) throw err;
+
+            console.log(advisor[0].week[0].available);
+            res.send(advisor);
+        });
+
+    });
 };

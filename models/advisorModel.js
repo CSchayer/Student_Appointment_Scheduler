@@ -8,9 +8,9 @@ var advisorSchema = new Schema({
     username: String,
     password: String,
     name: String,
-    available: [{
+    week: [{
         day: String,
-        time: [String],
+        available: [String],
         unavailable: [String]
     }]
 });
