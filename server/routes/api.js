@@ -46,6 +46,23 @@ module.exports = function(app) {
         });
     });
 
+    // Show available times for an advisor
+    app.get('/api/advisor/availabletimes/:name', function(req, res) {
+        var query = Advisor.find({name: req.params.name});
+        query.exec(function(err, advisor) {
+            if (err) res.send(err);
+
+            var times = [];
+
+
+            advisor.forEach(function(advisor) {
+               times.push(advisor.available);
+            });
+            res.send(times);
+        });
+    });
+
+
     // Show all the appointments in the database
     app.get('/api/appointmentlist', function(req, res) {
         var query = Appointment.find({});
@@ -56,6 +73,7 @@ module.exports = function(app) {
         })
     });
 
+    // Get all apointments for specific advisor
     app.get('/api/appointmentbyadvisor/:name', function(req, res) {
         Appointment.find({ advisor: req.params.name }, function(err, advisor) {
             if (err) throw err;
@@ -99,7 +117,7 @@ module.exports = function(app) {
 
     // DELETE Routes
 
-    // Delete an appointment fro the database
+    // Delete an appointment from the database
     app.delete('/api/appointment/delete', function(req, res) {
         Appointment.findByIdAndRemove(req.body._id, function(err, appointment) {
             if (err) throw err;

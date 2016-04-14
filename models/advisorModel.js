@@ -8,7 +8,11 @@ var advisorSchema = new Schema({
     username: String,
     password: String,
     name: String,
-    availableTimes: [String]
+    available: [{
+        day: String,
+        time: [String],
+        unavailable: [String]
+    }]
 });
 
 var Advisor = mongoose.model('Advisor', advisorSchema);
