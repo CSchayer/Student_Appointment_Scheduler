@@ -103,14 +103,49 @@ module.exports = function(app) {
 
     // Add an appointment to the database
     app.post('/api/appointment/add', function(req, res) {
-        // Create a new appointment
-        var newAppt = new Appointment(req.body);
 
-        // Save the new appointment in the database
-        newAppt.save(function(err) {
-            if (err)
-                res.send(err);
-            res.send("added " + newAppt);
+        var day = new Date(req.body.day);
+        var time = req.body.time;
+        var found  = false;
+
+        // Since we are currently using only the day name, this converts a date object to its day name
+        var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var dayName = weekday[day.getDay()];
+
+
+        Advisor.find({ name: req.body.advisor }, function(err, advisor) {
+            if (err) throw err;
+
+            // Finds the day name for the advisor and looks for that time in available
+            // times. If it finds it, it moves the time to the unavailable array
+            advisor[0].week.forEach(function(item) {
+                if (item.day === dayName && item.available.indexOf(time) > -1) {
+                    moveTimes(item.available, item.unavailable, time);
+                    found = true;
+                }
+            });
+
+            // Save the updated advisor information
+            if (found) {
+                advisor[0].save(function(err) {
+                    if (err)
+                        res.send(err);
+                    else
+                        console.log('Advisor times updated');
+                });
+                // Create a new appointment
+                var newAppt = new Appointment(req.body);
+
+                // Save the new appointment in the database
+                newAppt.save(function(err) {
+                    if (err)
+                        res.send(err);
+                    res.send("added " + newAppt);
+                });
+            }
+            else {
+                res.send("Time slot was not available");
+            }
         });
     });
 
@@ -130,18 +165,12 @@ module.exports = function(app) {
         });
     });
 
-
-    // PUT Routes
-    app.put('/api/advisor/availabletimes', function(req,res) {
-        console.log(req.body.name);
-        console.log(req.body.unavailable);
-
-        Advisor.find({ name: req.body.name }, function(err, advisor) {
-            if (err) throw err;
-
-            console.log(advisor[0].week[0].available);
-            res.send(advisor);
-        });
-
-    });
 };
+
+
+// Finds and removes a time from one array and puts it in another
+function moveTimes(available, unavailable, time) {
+    var i = available.indexOf(time);
+    unavailable.push(available[i]);
+    available.splice(i,1);
+}
