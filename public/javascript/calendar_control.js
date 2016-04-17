@@ -152,11 +152,17 @@ function submitAppointment()
 function createEventArray(eventArray)
 {
         var eventSource= [];
+        var i;
+
     $.each(eventArray,function(availableTimes){
-       eventSource.push({
-           "title":"",
-           "start":""
-       });
+        console.log(availableTimes);
+        for(i=0;i<availableTimes.size();i++) {
+            eventSource.push({
+                "title": "",
+                "start": availabltTimes[i]
+
+            });
+        }
     });
 }
 
