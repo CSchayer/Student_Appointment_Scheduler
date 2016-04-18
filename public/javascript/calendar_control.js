@@ -46,7 +46,6 @@ var showReasonPicker= function ()
 }
 var showDatePicker= function()
 {
-    populateCalendar();
     if($('#datepicker').css('display')=='none') {
         $('#datepicker').show();
     }
@@ -73,6 +72,7 @@ var buildCalender=function(day)
         height:700,
         minTime:"08:00:00",
         maxTime:"24:59:00",
+        defaultTimedEventDuration:"00:30:00",
         allDaySlot:false,
         columnFormat:{
             agenda:'ddd\n MMM Do'
@@ -80,11 +80,7 @@ var buildCalender=function(day)
         inline: true,
         weekends: false,//hides weekend parameter
         firstDay:day,
-        events:[{
-            title:'',
-            start:new Date(),
-
-        }],
+        events:createEventArray(getAvailableTimes()),
 
         eventColor:'#FDD023',
         header: {
@@ -133,44 +129,54 @@ function submitAppointment()
 
  function getAvailableTimes()
 {
-    var eventArray=[];
-    $.getJSON("/api/advisor/availabletimes/"+$('#counselor option:selected').text(),function(data){
-            var i = 0;
-        $.each( data, function( key, val ) {
-            $.each(val, function()
-            {
-                console.log(val[i].available);
-                eventArray.push(val[i].available);
-                i++;
-            });
-            console.log(eventArray);
-        });
-    });
-    return eventArray;
+    var tempEventArray=[];
+     $.ajax({
+             async: false,
+             url: "/api/advisor/availabletimes/" + $('#counselor option:selected').text(),
+             success: function (data) {
+                 console.log(data);
+                 console.log(data[0].length);
+                 console.log(data[0][0].available.length);
+                 for (var i = 0; i < data[0].length; i++) {
+                     for (var j = 0; j < data[0][i].available.length; j++) {
+                         tempEventArray[i] = data[0][i].available;
+                     }
+                 }
+             }
+         });
+         return tempEventArray;
 }
 
 function createEventArray(eventArray)
 {
         var eventSource= [];
         var i;
+        var j =0;
+        var opening={};
+        var dateArray =["4/20/2016","4/21/2016","4/22/2016","4/25/2016","4/26/2016"];
+        console.log(eventArray);
 
-    $.each(eventArray,function(availableTimes){
-        console.log(availableTimes);
-        for(i=0;i<availableTimes.size();i++) {
-            eventSource.push({
-                "title": "",
-                "start": availabltTimes[i]
-
-            });
-        }
-    });
+        $.each(eventArray, function(key,availableTimes){
+            for(i=0;i<availableTimes.length;i++) {
+                opening = {
+                    "title": "",
+                    "start": dateArray[j] + " " + availableTimes[i]
+                };
+                console.log(dateArray[j]);
+                console.log(opening);
+                eventSource.push(opening);
+            }
+            j++;
+        });
+    return eventSource;
 }
 
 function populateCalendar()
 {
-    var availableTimes = getAvailableTimes();
 
-    createEventArray(availableTimes);
+   var eventArray=getAvailableTimes();
+  var trial =createEventArray(getAvailableTimes());
+    console.log(trial);
 }
 
 function populateCounselor(){
