@@ -4,8 +4,40 @@
     <head>
         <title>LSU Scheduling App</title>
         <link href='/assets/stylesheets/style.css' type=text/css rel=stylesheet>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .btn-default {
+                background-color: #461D7C;
+                border-color: #461D7C;
+                color: #FFFFFF;
+            }
+
+            .btn-default:hover {
+                background-color: #FDD023;
+                color: black;
+            }
+        </style>
     </head>
+
     <body>
-        <h1>Home Page</h1>
+        <header id="header"><p>LSU Appointment Scheduler</p></header>
+        <h2 class="fadeIn">Online Appointment Scheduling for Computer Science Students</h2>
+
+        <div class ="fadeIn2">
+            <h3>Created by:</h3>
+        </div>
+        <div class = "fadeIn3">
+            <ul>
+                <li>Christopher Gore</li>
+                <li>Madeline May</li>
+                <li>Chris Schayer</li>
+                <li>James Singleton</li>
+            </ul>
+        </div>
+        <div class= "fadeIn4">
+            <br>
+            <a href="/student" class="btn btn-default">Schedule an Appointment</a>
+            <a href="/advisor" class="btn btn-default">Advisor Sign in</a>
+        </div>
     </body>
 </html>
