@@ -23,21 +23,21 @@ $(document).ready(function() {
 
             calendar.fullCalendar('changeView', 'agendaWeek');
             calendar.fullCalendar('gotoDate',d);
-            console.log(calendar.fullCalendar('clientEvents'));
+            //console.log(calendar.fullCalendar('clientEvents'));
             }
 
     });
     document.getElementById("#submit").addEventListener("click", createAppointment);
+   // document.getElementById("#cancel").addEventListener("click", cancelAppointmentForm);
 })
 
 var test1;
 var test2;
-var eventInfo;
 var eventObject;
 var eventJSON;
-var counselorJSON=[];
-
 var button = $('#form');
+
+
 var showReasonPicker= function ()
 {
     if($('#serviceSelector').css('display')=='none') {
@@ -52,18 +52,7 @@ var showDatePicker= function()
 
 }
 
-var buildModal = function()
-{
-    var dialog;
-    dialog = $("#dialog").dialog({
-        autoOpen: false,
-        width:"50%",
-        resize:"auto",
-        modal:true,
-    });
-    return dialog;
-}
-
+//rebuilds the event calendar based on minicalendar input or after appointment has been made.
 var buildCalender=function(day)
 {
 
@@ -80,7 +69,7 @@ var buildCalender=function(day)
         inline: true,
         weekends: false,//hides weekend parameter
         firstDay:day,
-        events:createEventArray(getAvailableTimes()),
+        events:populateCalendar(),
 
         eventColor:'#FDD023',
         header: {
@@ -94,7 +83,10 @@ var buildCalender=function(day)
             $('#form').css({
                 'width':'100%',
                 'height':'100%',})
-            $("#formDate").html("<b>Appointment Date:</b> "+ moment(calEvent.start).format('MMMM Do YYYY'));
+            $('form input').on('keypress', function(e) {
+                return e.which !== 13;
+            });
+            $("#formDate").html("<b>Appointment Date:</b> "+ moment(calEvent.start).format('MMMM D, YYYY'));
             $("#formTime").html("<b>Appointment Time:</b> "+ moment(calEvent.start).format('h:mm A'));
             $("#formCounselor").html("<b>Counselor Requested:</b> "+$("#counselor option:selected").text());
             $("#formReason").html("<b>Reason for appointment:</b> "+$("#service option:selected").text());
@@ -104,27 +96,50 @@ var buildCalender=function(day)
     });
     return tempcalendar;
 }
+
+//creates an appointment object and posts the data to the appointment list, also updates the available times on the student side
 function createAppointment()
 {
-    formParse();
-    submitAppointment();
+    var formData=formParse();
+
+    submitAppointment(formData);
+    $("#dialog").dialog('close');
 }
+
+function cancelAppointmentForm()
+{
+    $("#dialog").dialog('close');
+}
+
+var buildModal = function()
+{
+    var dialog;
+    dialog = $("#dialog").dialog({
+        autoOpen: false,
+        width:"50%",
+        resize:"auto",
+        modal:true,
+    });
+    return dialog;
+}
+
 function formParse()
 {
-    test1={
-        "day":moment(eventObject.start).format('MMMM Do YYYY'),
-        "time": moment(eventObject.start).format('h:mm A'),
+    var form={
+        "day":moment(eventObject.start,'MM-DD-YYYY'),
+        "time": moment(eventObject.start,'h:mm A'),
         "service": $('#service option:selected').text(),
         "advisor": $("#counselor option:selected").text(),
         "student": $('#name').val(),
         "student Id": $('#title').val(),
     };
+    return form;
 }
 
-function submitAppointment()
+function submitAppointment(appointment)
 {
-    //Push to counselor appoints.
-    //Delete from available appointments
+    sendAdvisor(appointment);
+
 }
 
  function getAvailableTimes()
@@ -133,10 +148,9 @@ function submitAppointment()
      $.ajax({
              async: false,
              url: "/api/advisor/availabletimes/" + $('#counselor option:selected').text(),
+            //beforeSend:,
+            //complete:,
              success: function (data) {
-                 console.log(data);
-                 console.log(data[0].length);
-                 console.log(data[0][0].available.length);
                  for (var i = 0; i < data[0].length; i++) {
                      for (var j = 0; j < data[0][i].available.length; j++) {
                          tempEventArray[i] = data[0][i].available;
@@ -147,23 +161,21 @@ function submitAppointment()
          return tempEventArray;
 }
 
+//creates the eventArray that acts as the source for the fullcalendar events
 function createEventArray(eventArray)
 {
         var eventSource= [];
         var i;
         var j =0;
         var opening={};
-        var dateArray =["4/20/2016","4/21/2016","4/22/2016","4/25/2016","4/26/2016"];
-        console.log(eventArray);
+        var dateArray =["2016  4 20","2016 4 21","2016 4 22","2016 4 25","2016 4 26"];
 
         $.each(eventArray, function(key,availableTimes){
             for(i=0;i<availableTimes.length;i++) {
                 opening = {
                     "title": "",
-                    "start": dateArray[j] + " " + availableTimes[i]
+                    "start": new Date(dateArray[j] + " " + availableTimes[i])
                 };
-                console.log(dateArray[j]);
-                console.log(opening);
                 eventSource.push(opening);
             }
             j++;
@@ -171,12 +183,12 @@ function createEventArray(eventArray)
     return eventSource;
 }
 
-function populateCalendar()
+//adds the
+var populateCalendar = function()
 {
-
-   var eventArray=getAvailableTimes();
-  var trial =createEventArray(getAvailableTimes());
-    console.log(trial);
+    var eventArray=getAvailableTimes();
+   var availableEvents = createEventArray(eventArray);
+    return availableEvents
 }
 
 function populateCounselor(){
@@ -191,4 +203,8 @@ function populateCounselor(){
     });
 }
 
+function sendAdvisor(appointment)
+{
+ $.post("api/appointment/add",appointment);
+}
 
