@@ -14,6 +14,62 @@ angular
         vm.events = [
         ];
 
+        ////////////////////////////////////////////////////////////////////////
+
+        var name = 'John Doe';
+        var appointments = [];
+        var dates = [];
+
+        // Adds minutes to a datetime object
+        function addMinutes(date, minutes) {
+            return new Date(date.getTime() + minutes*60000);
+        }
+
+        // Used to show current and future appointments on calendar
+        function showAppointment(date) {
+            var today = new Date();
+
+            if (date < today) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+        // GET all appointments for an adivsor from the API
+        $http.get('/api/appointmentbyadvisor/' + name).then(function(response) {
+
+            response.data.forEach(function(entry) {
+                appointments.push(entry);
+            });
+            console.log(appointments);
+
+
+            appointments.forEach(function(appt, index) {
+                dates.push(new Date(appt.day + ' ' + appt.time));
+
+
+                if (showAppointment(dates[index])) {
+                    vm.events.push({
+                        title: appt.student,
+                        service: appt.service,
+                        studentEmail: appt.studentEmail,
+                        type: 'important',
+                        startsAt: dates[index],
+                        endsAt: addMinutes(dates[index],30)
+                    });
+                }
+
+            });
+            console.log(dates);
+
+            console.log(vm.events);
+
+        });
+
+        ////////////////////////////////////////////////////////////////////////
+
         vm.isCellOpen = true;
 
         vm.eventClicked = function(event) {

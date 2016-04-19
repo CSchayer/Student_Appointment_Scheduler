@@ -44,24 +44,31 @@ app.controller('MainCtrl', function($scope, $http) {
         console.log(response.data);
     });
 
+    var idToDelete = {
+        "_id": "570db60be996733605aed4c8"
+    };
+    // Needs to be fixed
+    $http.delete('/api/appointment/delete', idToDelete).then(function(response) {
+        console.log(response.data);
+    });
+
 
     // POST a new appointment
 
     var jsonData = {
-        "day": "4/8/16",
-        "time": "1:00 PM",
+        "day": "4/26/16",
+        "time": "8:00 AM",
         "service": "Other",
         "advisor": "John Doe",
-        "student": "James Jones",
-        "studentEmail": "jj@gmail.com"
+        "student": "Jill Jones",
+        "studentEmail": "jill@gmail.com"
     };
 
-    /* I'm commenting this out because it will add this appointment every time it is run
-       but this is a simple example of how it's done
-    $http.post('/api/appointment/add', jsonData).then(function(response) {
-        console.log(response.data);
-    });
-    */
+    // I'm commenting this out because it will add this appointment every time it is run
+    // but this is a simple example of how it's done
+    //$http.post('/api/appointment/add', jsonData).then(function(response) {
+    //    console.log(response.data);
+    //});
 
 });
 

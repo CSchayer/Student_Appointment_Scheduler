@@ -1,3 +1,43 @@
-body {
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+#header {
+    padding: 0.3em;
+    background: #461D7C;
+    color: #FDD023;
+    font-size: 300%;
+    font-family: Garamond;
+    text-align: center;
+}
+
+.fadeIn {
+    text-align: center;
+    animation: fadeAndScale .3s ease-in;
+}
+
+.fadeIn2 {
+    text-align: center;
+    animation: fadeAndScale .3s ease-in;
+}
+
+.fadeIn3 {
+    animation: fadeAndScale .3s ease-in;
+}
+
+.fadeIn4 {
+    text-align: center;
+    animation: fadeAndScale .3s ease-in;
+}
+
+ul {
+    display:table; margin:0 auto;
+}
+
+
+@keyframes fadeAndScale {
+    from {
+        opacity: 0;
+        transform: scale3d(.75, .75, 1);
+    }
+    to {
+        opacity: 1;
+        transform: scale3d(1, 1, 1);
+    }
 }
