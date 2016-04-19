@@ -16,7 +16,7 @@ angular
 
         ////////////////////////////////////////////////////////////////////////
 
-        var name = 'John Doe';
+        var name = JSON.parse(localStorage.getItem("name"));
         var appointments = [];
         var dates = [];
 
@@ -43,7 +43,6 @@ angular
             response.data.forEach(function(entry) {
                 appointments.push(entry);
             });
-            console.log(appointments);
 
 
             appointments.forEach(function(appt, index) {
@@ -62,10 +61,6 @@ angular
                 }
 
             });
-            console.log(dates);
-
-            console.log(vm.events);
-
         });
 
         ////////////////////////////////////////////////////////////////////////
