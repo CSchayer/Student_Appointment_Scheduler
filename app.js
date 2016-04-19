@@ -37,31 +37,11 @@ app.get('/student', function(req, res) {
     res.render('student.html');
 });
 
-
-
-//
-// TEST ENVIRONMENTS
-//
-
-// GET Chris Gore Test Page
-app.get('/test/cg', function(req,res) {
-    res.render('test-chris-gore.html');
+// Advisor Login Page
+app.get('/advisor/login', function(req,res) {
+    res.render('advisor-sign-in.html');
 });
 
-// GET Madeline Test Page
-app.get('/test/mm', function(req, res) {
-    res.render('test-madeline.html');
-});
-
-// GET Chris Schayer Test Page
-app.get('/test/cs', function(req, res) {
-    res.render('test-chris-schayer.html');
-});
-
-// GET James Test Page
-app.get('/test/js', function(req, res) {
-    res.render('test-james.html');
-});
 
 // Starts the server on port 3000
 app.listen(port, function() {
