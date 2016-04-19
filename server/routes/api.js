@@ -46,6 +46,27 @@ module.exports = function(app) {
         });
     });
 
+    // Get login information for an advisor
+    app.get('/api/advisor/login/:username', function(req, res) {
+        var query = Advisor.findOne({username: req.params.username});
+        query.exec(function(err, advisor) {
+            if (err)
+                res.send(err);
+
+            if (advisor === null) {
+                res.send("User not found");
+            }
+            else {
+                var login = {
+                    name: advisor.name,
+                    username: advisor.username,
+                    password: advisor.password
+                };
+                res.send(login);
+            }
+        });
+    });
+
     // Show available times for an advisor
     app.get('/api/advisor/availabletimes/:name', function(req, res) {
         var query = Advisor.find({name: req.params.name});
