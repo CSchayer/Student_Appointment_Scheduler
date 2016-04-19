@@ -27,7 +27,7 @@ $(document).ready(function() {
 
     });
     document.getElementById("#submit").addEventListener("click", createAppointment);
-    //document.getElementById("#cancel").addEventListener("click", cancelAppointmentForm);
+    document.getElementById("#cancel").addEventListener("click", cancelAppointmentForm);
 })
 
 var eventObject;
@@ -169,14 +169,20 @@ function createEventArray(eventArray)
         var eventSource= [];
         var i;
         var opening={};
-        var dateArray =["2016 4 25","2016 4 26","2016 4 20","2016 4 21","2016 4 22"];
+
+        var dateArray =["2016/4/25","2016/4/26","2016/4/20","2016/4/21","2016/4/22"];
         var j = 0;
+
         $.each(eventArray, function(key,availableTimes){
+           // if(window.navigator.appName==)
 
             for(i=0;i<availableTimes.length;i++) {
+                var trials = new Date(dateArray[j]+" "+availableTimes[i]);
+                console.log(trials);
                 opening = {
                     "title": "",
-                    "start": new Date(dateArray[j] + " " + availableTimes[i])
+                    "start":new Date(dateArray[j] + " " + availableTimes[i])
+
                 };
                 eventSource.push(opening);
             }
