@@ -173,9 +173,8 @@ function createEventArray(eventArray)
         var dateArray =["2016/4/25","2016/4/26","2016/4/20","2016/4/21","2016/4/22"];
         var j = 0;
 
+       //converts all the date and times to an appropriate date object.
         $.each(eventArray, function(key,availableTimes){
-           // if(window.navigator.appName==)
-
             for(i=0;i<availableTimes.length;i++) {
                 var trials = new Date(dateArray[j]+" "+availableTimes[i]);
                 console.log(trials);
