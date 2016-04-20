@@ -174,13 +174,42 @@ module.exports = function(app) {
     // DELETE Routes
 
     // Delete an appointment from the database
-    app.delete('/api/appointment/delete', function(req, res) {
-        Appointment.findByIdAndRemove(req.body._id, function(err, appointment) {
+    app.delete('/api/appointment/delete/:id', function(req, res) {
+        Appointment.findByIdAndRemove(req.params.id, function(err, appointment) {
             if (err) throw err;
             if (appointment === null) {
                 res.send("Error: Appointment ID not found")
             }
             else {
+                var day = new Date(appointment.day);
+                var time = appointment.time;
+                var found  = false;
+
+                var weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                var dayName = weekday[day.getDay()];
+
+                Advisor.findOne({ name: appointment.advisor }, function(err, advisor) {
+                    if (err) throw err;
+
+                    advisor.week.forEach(function(item) {
+                       if(item.day === dayName && item.unavailable.indexOf(time) > -1) {
+                           moveTimes(item.unavailable, item.available, time);
+                           found = true;
+                       }
+                    });
+
+                    if (found) {
+                        advisor.save(function(err) {
+                            if (err)
+                                res.send(err);
+                            else
+                                console.log("Times updated");
+                        });
+                    }
+                    else
+                        console.log("Error: time not found");
+                });
+
                 res.send("Deleted \n" + appointment);
             }
         });

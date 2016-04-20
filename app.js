@@ -42,7 +42,6 @@ app.get('/advisor/login', function(req,res) {
     res.render('advisor-sign-in.html');
 });
 
-
 // Starts the server on port 3000
 app.listen(port, function() {
     console.log("App listening on port " + port);
