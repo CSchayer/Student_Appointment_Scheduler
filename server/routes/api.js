@@ -174,8 +174,8 @@ module.exports = function(app) {
     // DELETE Routes
 
     // Delete an appointment from the database
-    app.delete('/api/appointment/delete', function(req, res) {
-        Appointment.findByIdAndRemove(req.body._id, function(err, appointment) {
+    app.delete('/api/appointment/delete/:id', function(req, res) {
+        Appointment.findByIdAndRemove(req.params.id, function(err, appointment) {
             if (err) throw err;
             if (appointment === null) {
                 res.send("Error: Appointment ID not found")

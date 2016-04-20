@@ -44,13 +44,13 @@ angular
                 appointments.push(entry);
             });
 
-
             appointments.forEach(function(appt, index) {
                 dates.push(new Date(appt.day + ' ' + appt.time));
 
 
                 if (showAppointment(dates[index])) {
                     vm.events.push({
+                        id: appt._id,
                         title: appt.student,
                         service: appt.service,
                         studentEmail: appt.studentEmail,
@@ -62,6 +62,25 @@ angular
 
             });
         });
+
+        vm.deleteEvent = function(index) {
+            $http.delete('/api/appointment/delete/' + vm.events[index].id)
+                .then(function (response) {
+                    console.log(response);
+            });
+            console.log(vm.events[index].id);
+            console.log(vm.events[index]);
+
+            vm.events.splice(index, 1);
+        };
+
+        vm.deleteSingleEvent = function(event) {
+            $http.delete('/api/appointment/delete/' + event.id)
+                .then(function (response) {
+                    console.log(response);
+                });
+            location.reload();
+        };
 
         ////////////////////////////////////////////////////////////////////////
 
@@ -97,7 +116,7 @@ angular
 
         function show(action, event) {
             return $uibModal.open({
-                templateUrl: 'modalContent.html',
+                //templateUrl: 'modalContent.html',
                 controller: function() {
                     var vm = this;
                     vm.action = action;
