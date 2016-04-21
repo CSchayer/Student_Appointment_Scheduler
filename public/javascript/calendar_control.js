@@ -178,7 +178,6 @@ function createEventArray(eventArray)
 
             for(i=0;i<availableTimes.length;i++) {
                 var trials = new Date(dateArray[j]+" "+availableTimes[i]);
-                console.log(trials);
                 opening = {
                     "title": "",
                     "start":new Date(dateArray[j] + " " + availableTimes[i])
@@ -188,7 +187,6 @@ function createEventArray(eventArray)
             }
             j++;
         });
-    console.log(dateArray);
     return eventSource;
 }
 
@@ -213,7 +211,6 @@ function populateCounselor(){
 //makes a post request to the appointmentlist.
 function sendAdvisor(appointment)
 {
-    console.log(appointment);
     var posting = $.post("api/appointment/add",appointment);
       posting.done(function(){
           $('#calendar').fullCalendar('removeEvents');

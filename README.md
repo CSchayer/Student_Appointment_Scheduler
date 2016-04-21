@@ -23,3 +23,15 @@ Using the console, navigate to the directory where your project is stored. Execu
 npm install
 ```
 This will install all the node modules needed for the project. These dependencies are listed in the package.json file.
+
+Once the install has finished, execute the command
+```
+node app.js
+```
+
+This should produce the following output to the console
+```
+App listening on port 3000
+```
+
+The application is now running, and the home page can be reached by opening Google Chrome (*NOTE: This application was developed to run in Google Chrome. Proper functionality cannot be guaranteed in other browsers.*) and going to the URL localhost:3000.

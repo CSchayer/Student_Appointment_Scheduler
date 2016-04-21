@@ -1,5 +1,7 @@
 # Implementation
 
+*This was written as a guide for team members using WebStorm to develop the application.*
+
 
 ## Setup
 * Fork the project from the [GitHub repository] (https://github.com/acidr31gn/Student_Appointment_Scheduler).
