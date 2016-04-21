@@ -150,8 +150,6 @@ function submitAppointment(appointment)
      $.ajax({
              async: false,
              url: "/api/advisor/availabletimes/" + $('#counselor option:selected').text(),
-            //beforeSend:,
-            //complete:,
              success: function (data) {
                  for (var i = 0; i < data[0].length; i++) {
                      for (var j = 0; j < data[0][i].available.length; j++) {
@@ -166,11 +164,13 @@ function submitAppointment(appointment)
 //creates the eventArray that acts as the source for the fullcalendar events
 function createEventArray(eventArray)
 {
+        //holds the event objects created in the nested loop.
         var eventSource= [];
         var i;
+        //creates an event object properly formatted with start time that works with each browser
         var opening={};
 
-        var dateArray =["2016/4/25","2016/4/26","2016/4/20","2016/4/21","2016/4/22"];
+        var dateArray =["2016/4/25","2016/4/26","2016/4/27","2016/4/21","2016/4/22"];
         var j = 0;
 
        //converts all the date and times to an appropriate date object.
@@ -191,7 +191,7 @@ function createEventArray(eventArray)
     return eventSource;
 }
 
-//creates an array of object events from the available times form our database
+//creates an array of object events from the available times form our database and acts as the event source for the fullcalendar call.
 var populateCalendar = function()
 {
     var eventArray=getAvailableTimes();
@@ -209,7 +209,8 @@ function populateCounselor(){
         })
     });
 }
-//makes a post request to the appointmentlist.
+
+//makes a post request to the appointmentlist, as well as rerender the calendar events with the updated available times
 function sendAdvisor(appointment)
 {
     console.log(appointment);
